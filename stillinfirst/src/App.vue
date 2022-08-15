@@ -1,21 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <StillInFirst msg="Yo"></StillInFirst>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <StillInFirst></StillInFirst>
 </template>
 
 <script>
-import StillInFirst from "./components/StillInFirst.vue"
+import StillInFirst from "./components/StillInFirst.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    StillInFirst
+    StillInFirst,
   },
   computed: {
     console: () => console,
     window: () => window,
-  }
-}
+  },
+  methods: {
+    //TODO: A LOT
+  },
+};
 </script>
 
 <style>
