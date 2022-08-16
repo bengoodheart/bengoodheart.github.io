@@ -1,11 +1,10 @@
 <template>
   <div ref="el">
-    <button @click="this.pingAPI">PING</button>
-    <button @click="this.getNLEastFirst">LIST</button>
   </div>
 </template>
 
 <script>
+import { ref } from "vue"
 const SEASON = 2022;
 const LEAGUE = 1;
 const PONG = "PONG";
@@ -25,7 +24,7 @@ const OPTIONS = {
 
 //TODO: BREAK OUT THE REST PART INTO A SEPARATE COMPONENT
 
-export default {
+export default{
   name: "StillInFirst",
   props: {
     msg: String,
@@ -46,7 +45,9 @@ export default {
         console.log(PONG);
       });
     },
-    getNLEastFirst() {
+    getNLEastStandings() {
+      let pos = -1
+      const temp_arr = ref([]);
       this.makeRestCall(function (response) {
         let data = response.data.response;
         for (let i = 0; i < data[0].length; i++) {
@@ -55,12 +56,20 @@ export default {
           let division = team_obj["name"];
           if (division === NL_EAST) {
             let team_name = standings["team"]["name"];
-            //let positions = standings['positions'];
-            console.log(team_name);
+            temp_arr.value.push(team_name)
           }
         }
+        pos = temp_arr.value.indexOf("New York Mets")
+        console.log("Mets Position in NLEAST is:" + (pos+1))
       });
+      
     },
   },
+  data(){
+    return{
+      standings_arr: [],
+      first: '',
+    }
+  }
 };
 </script>

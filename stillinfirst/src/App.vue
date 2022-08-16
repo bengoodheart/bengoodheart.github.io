@@ -1,6 +1,7 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <StillInFirst></StillInFirst>
+  <StillInFirst ref="sif"></StillInFirst>
+  <button @click="isMetsInFirst">Try it</button>
 </template>
 
 <script>
@@ -16,8 +17,23 @@ export default {
     window: () => window,
   },
   methods: {
-    //TODO: A LOT
+    isMetsInFirst(){
+      let response = this.$refs.sif.getNLEastStandings();
+      this.console.log(response)
+      if (response === 0){
+        this.console.log(true)
+        return true;
+      } else if (response != 0){
+        return false
+      }
+    }
   },
+  data(){
+    return{
+      test: '',
+      first: '',
+    }
+  }
 };
 </script>
 
