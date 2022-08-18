@@ -1,10 +1,20 @@
 <template>
   <div ref="el">
+    <div class="container-sm">
+    <b-card  bg-variant="primary" text-variant="white"  v-if="divPos.value = 1">
+      <h1 >YES!</h1>
+    </b-card>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue"
+import { ref, watchEffect, computed } from "vue"
+
+/**
+ * Constant Declarations
+ */
+
 const SEASON = 2022;
 const LEAGUE = 1;
 const PONG = "PONG";
@@ -22,16 +32,17 @@ const OPTIONS = {
   },
 };
 
-//TODO: BREAK OUT THE REST PART INTO A SEPARATE COMPONENT
-
 export default{
   name: "StillInFirst",
-  props: {
-    msg: String,
-  },
+  setup(){
+    var inFirst = ref(false);
+    var hasFetched = ref(false);
+    const divPos = ref(-1)
 
-  methods: {
-    makeRestCall(func) {
+    // const leaguePos = -1;
+    // const overallPos = -1;
+
+    function makeRestCall(func) {
       const axios = require("axios");
       axios
         .request(OPTIONS)
@@ -39,16 +50,15 @@ export default{
         .catch(function (error) {
           console.error(error);
         });
-    },
-    pingAPI() {
-      this.makeRestCall(function () {
+    }
+    function pingAPI() {
+      makeRestCall(function () {
         console.log(PONG);
       });
-    },
-    getNLEastStandings() {
-      let pos = -1
+    }
+    async function getNLPos() {
       const temp_arr = ref([]);
-      this.makeRestCall(function (response) {
+      await makeRestCall(function (response) {
         let data = response.data.response;
         for (let i = 0; i < data[0].length; i++) {
           let standings = data[0][i];
@@ -59,17 +69,28 @@ export default{
             temp_arr.value.push(team_name)
           }
         }
-        pos = temp_arr.value.indexOf("New York Mets")
-        console.log("Mets Position in NLEAST is:" + (pos+1))
+        let pos = temp_arr.value.indexOf("New York Mets")
+        divPos.value = computed(()=>{
+          return pos + 1
+        });
+        watchEffect(()=> console.log("Value Changed: " + divPos.value))
       });
-      
-    },
-  },
-  data(){
-    return{
-      standings_arr: [],
-      first: '',
     }
+    function anyInFirst(){
+      var res = divPos.value
+      console.log(res)
+    }
+    return { 
+      pingAPI, 
+      getNLPos, 
+      divPos, 
+      anyInFirst, 
+      inFirst, 
+      hasFetched,
+      };
+  },
+  created(){
+    this.getNLPos() 
   }
-};
+}
 </script>
