@@ -1,15 +1,20 @@
 <template>
   <div ref="el">
-    <div class="container-sm">
-    <b-card  bg-variant="primary" text-variant="white"  v-if="divPos.value = 1">
-      <h1 >YES!</h1>
+    <b-container>
+    <b-card  bg-variant="primary" text-variant="white" class="shadow"  v-if="divFirst.value == true">
+      <b-badge text-variant="secondary"><h1>YES!</h1></b-badge>
+      <p>
+        The New York Metropolitons are still in first in the <span v-if="divFirst.value == true"> NL East</span><span v-if="leagueFirst.value == true"> and the National league</span>!
+      </p>
     </b-card>
-    </div>
+    <b-card bg-variant="danger" text-variant="white" v-else > <h3>Uh....</h3> </b-card> 
+    </b-container>
   </div>
 </template>
 
 <script>
-import { ref, watchEffect, computed } from "vue"
+
+import { ref, computed } from "vue"
 
 /**
  * Constant Declarations
@@ -35,12 +40,8 @@ const OPTIONS = {
 export default{
   name: "StillInFirst",
   setup(){
-    var inFirst = ref(false);
-    var hasFetched = ref(false);
-    const divPos = ref(-1)
-
-    // const leaguePos = -1;
-    // const overallPos = -1;
+    const divFirst = ref(false);
+    const leagueFirst = ref(false);
 
     function makeRestCall(func) {
       const axios = require("axios");
@@ -56,7 +57,7 @@ export default{
         console.log(PONG);
       });
     }
-    async function getNLPos() {
+    async function getNLEastPos() {
       const temp_arr = ref([]);
       await makeRestCall(function (response) {
         let data = response.data.response;
@@ -70,27 +71,47 @@ export default{
           }
         }
         let pos = temp_arr.value.indexOf("New York Mets")
-        divPos.value = computed(()=>{
-          return pos + 1
-        });
-        watchEffect(()=> console.log("Value Changed: " + divPos.value))
+        pos = pos + 1;
+        if(pos == 1){
+          divFirst.value = computed(() =>{
+            return true;
+          });
+        }
       });
     }
-    function anyInFirst(){
-      var res = divPos.value
-      console.log(res)
+    async function getNLLeaguePos(){
+      const temp_arr = ref([]);
+      await makeRestCall(function (response) {
+        let data = response.data.response;
+        console.log(data)
+        for (let i = 0; i < data[0].length; i++) {
+          let standings = data[0][i];
+          let team_obj = standings["group"];
+          let league = team_obj["name"];
+          if (league == "National League"){
+            let team_name = standings["team"]['name']
+            temp_arr.value.push(team_name);
+          }
+        }
+        let pos = (temp_arr.value.indexOf("New York Mets")) + 1
+        if(pos == 1){
+          leagueFirst.value = computed(() => {
+            return true
+          })
+        }
+      })
     }
     return { 
       pingAPI, 
-      getNLPos, 
-      divPos, 
-      anyInFirst, 
-      inFirst, 
-      hasFetched,
+      getNLEastPos,
+      getNLLeaguePos, 
+      divFirst,
+      leagueFirst,
       };
   },
   created(){
-    this.getNLPos() 
+    this.getNLEastPos() 
+    this.getNLLeaguePos()
   }
 }
 </script>
