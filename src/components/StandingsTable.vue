@@ -1,4 +1,5 @@
 <template>
+<BaseballAPI></BaseballAPI>
   <div class="accordian" role="tablist">
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
@@ -20,6 +21,7 @@
 <script>
 /*eslint-disable*/
 import { ref, computed } from "vue";
+import pingAPI from "./BaseballAPI.vue"
 
 const SEASON = 2022;
 const LEAGUE = 1;
@@ -100,6 +102,9 @@ export default {
     this.getNLLeagueTable();
     this.getNLEastTable();
   },
+  mounted(){
+
+}
 };
 </script>
 

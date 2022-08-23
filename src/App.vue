@@ -1,7 +1,7 @@
 <template>
 <b-container >
   <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
-
+  
   <StillInFirst></StillInFirst>
   <StandingsTable></StandingsTable>
   </b-container>
