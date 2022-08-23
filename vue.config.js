@@ -9,6 +9,6 @@ module.exports = defineConfig({
         chunks: "all",
       },
     },
-    publicPath: process.env.NODE_ENV === 'production'    ? '/stillinfirst/'    : '/'
+    //publicPath: process.env.NODE_ENV === 'production'    ? '/stillinfirst/'    : '/'
   },
 });

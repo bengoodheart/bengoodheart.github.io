@@ -1,18 +1,21 @@
 <template>
 <b-container >
-<b-card text-variant="primary" class="shadow">Are the Mets Still In First?</b-card>
+  <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
 
   <StillInFirst></StillInFirst>
+  <StandingsTable></StandingsTable>
   </b-container>
 </template>
 
 <script>
 import StillInFirst from "./components/StillInFirst.vue";
+import StandingsTable from "./components/StandingsTable.vue"
 
 export default {
   name: "App",
   components: {
     StillInFirst,
+    StandingsTable,
   },
   computed: {
     console: () => console,

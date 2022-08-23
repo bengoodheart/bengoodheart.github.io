@@ -1,14 +1,12 @@
 <template>
-  <div ref="el">
-    <b-container>
-    <b-card  bg-variant="primary" text-variant="white" class="shadow"  v-if="divFirst.value == true">
+  <div>
+    <b-card bg-variant="primary" text-variant="white" class="shadow"  v-if="divFirst.value == true">
       <b-badge text-variant="secondary"><h1>YES!</h1></b-badge>
       <p>
         The New York Metropolitons are still in first in the <span v-if="divFirst.value == true"> NL East</span><span v-if="leagueFirst.value == true"> and the National league</span>!
       </p>
     </b-card>
     <b-card bg-variant="danger" text-variant="white" v-else > <h3>Uh....</h3> </b-card> 
-    </b-container>
   </div>
 </template>
 
