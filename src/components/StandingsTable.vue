@@ -1,5 +1,4 @@
 <template>
-<BaseballAPI></BaseballAPI>
   <div class="accordian" role="tablist">
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
@@ -20,8 +19,7 @@
 </template>
 <script>
 /*eslint-disable*/
-import { ref, computed } from "vue";
-import pingAPI from "./BaseballAPI.vue"
+import { ref, computed, onMounted } from "vue";
 
 const SEASON = 2022;
 const LEAGUE = 1;
@@ -38,41 +36,16 @@ const OPTIONS = {
 
 export default {
   name: "StandingsTable",
-  setup() {
-    const NLStandings = ref([]);
-    const NLEastStandings = ref([]);
-
-    function makeRestCall(func) {
-      const axios = require("axios");
-      axios
-        .request(OPTIONS)
-        .then(func)
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
-
-    async function getNLLeagueTable() {
-      const temp_arr = ref([]);
-      await makeRestCall(function (response) {
-        let data = response.data.response;
-        for (let i = 0; i < data[0].length; i++) {
-          let standings = data[0][i];
-          let team_obj = standings["group"];
-          let league = team_obj["name"];
-          if (league == "National League") {
-            let team_name = standings["team"]["name"];
-            let pos = standings["position"];
-            temp_arr.value.push({ pos: pos, team_name: team_name });
-          }
-        }
-        NLStandings.value = temp_arr.value;
-        console.log(NLStandings.value);
-      });
-    }
-
+  props:{
+    NLEastTable: Array,
+    NLStandings: Array,
+  },
+  setup() {        
     async function getNLEastTable() {
       const temp_arr = ref([]);
+
+      //Retrieve the table from the Baseball API module
+      /**
       await makeRestCall(function (response) {
         let data = response.data.response;
         for (let i = 0; i < data[0].length; i++) {
@@ -88,23 +61,13 @@ export default {
         }
         NLEastStandings.value = temp_arr.value;
         console.log(NLEastStandings.value);
-      });
+      });*/
     }
     return {
-      makeRestCall,
-      getNLLeagueTable,
-      getNLEastTable,
-      NLStandings,
-      NLEastStandings,
     };
   },
   created() {
-    this.getNLLeagueTable();
-    this.getNLEastTable();
   },
-  mounted(){
-
-}
 };
 </script>
 

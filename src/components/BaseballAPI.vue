@@ -13,6 +13,7 @@ export default {
         const SEASON = ref(2022);
         const LEAGUE = ref(1);
         const PONG = ref("PONG");
+        const NLStandings = ref([])
         //const NYM = "New York Mets";
 
         const OPTIONS = {
@@ -44,6 +45,26 @@ export default {
                 console.log(PONG)
             })
         }
+
+        async function getNLLeagueTable() {
+      const temp_arr = ref([]);
+
+      await makeRestCall(function (response) {
+        let data = response.data.response;
+        for (let i = 0; i < data[0].length; i++) {
+          let standings = data[0][i];
+          let team_obj = standings["group"];
+          let league = team_obj["name"];
+          if (league == "National League") {
+            let team_name = standings["team"]["name"];
+            let pos = standings["position"];
+            temp_arr.value.push({ pos: pos, team_name: team_name });
+          }
+        }
+        NLStandings.value = temp_arr.value;
+        console.log(NLStandings.value);
+      })
+    }
         return { 
             SEASON,
             LEAGUE,
@@ -51,10 +72,12 @@ export default {
             OPTIONS,
             makeRestCall,
             pingAPI,
+            getNLLeagueTable,
          }
     },
     created(){
         this.pingAPI();
+        this.getNLLeagueTable();
     }
 }
 </script>
