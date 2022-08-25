@@ -17,6 +17,8 @@ import StillInFirst from "./components/StillInFirst.vue";
 import StandingsTable from "./components/StandingsTable.vue"
 import DonateFooter from "./components/DonateFooter.vue"
 import BaseballAPI from "./components/BaseballAPI.vue"
+import { NLStandings } from "@/store/NLStandings.js"
+
 
 export default {
   name: "App",
@@ -26,12 +28,14 @@ export default {
     DonateFooter,
     BaseballAPI,
 },
-  computed: {
+computed: {
     console: () => console,
     window: () => window,
+    
   },
   created(){
-    this.console.log(this.$refs)
+    const fetchedStandings = NLStandings();
+    this.console.log(fetchedStandings)
   }
 };
 </script>

@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import {ref, reactive} from "vue"
+import {ref} from "vue"
+import { NLStandings } from '@/store/NLStandings.js'
 export default {
     name:'BaseballAPI',
     setup(){
@@ -14,7 +15,7 @@ export default {
         const LEAGUE = ref(1);
         const PONG = ref("PONG");
         const NL = ref("National League")
-        const NLStandings = reactive([]);
+        const fetchedStandings= NLStandings();
 
         //const NYM = "New York Mets";
 
@@ -49,7 +50,7 @@ export default {
         }
 
         async function getNLLeagueTable() {
-            let temp_arr = reactive([])
+            let temp_arr = ref([])
             await makeRestCall(function(response) {
                     let data = response.data.response;
                     for (let i = 0; i < data[0].length; i++) {
@@ -60,11 +61,10 @@ export default {
                     if (league == NL.value) {
                         let team_name = standings["team"]["name"];
                         let pos = standings["position"];
-                        temp_arr.push({ pos: pos, team_name: team_name });
+                        temp_arr.value.push({ pos: pos, team_name: team_name });
                     }
                     }
-                    NLStandings.value = temp_arr;
-                    console.log(NLStandings.value[1]);
+                    fetchedStandings.list = temp_arr;
             })
         }
         return { 
@@ -76,6 +76,7 @@ export default {
             pingAPI,
             getNLLeagueTable,
             NLStandings,
+            fetchedStandings
          }
     },
     async created(){

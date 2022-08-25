@@ -20,6 +20,7 @@
 <script>
 /*eslint-disable*/
 import { ref, computed, onMounted } from "vue";
+import { NLStandings } from "@/store/NLStandings.js"
 
 const SEASON = 2022;
 const LEAGUE = 1;

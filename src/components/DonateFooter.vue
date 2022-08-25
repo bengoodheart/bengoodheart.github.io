@@ -1,5 +1,7 @@
 <template lang="">
+
     <div class="donate">
+        <b-container>
         <b-card text-variant="primary">
             <span style="font-size:12px">
             Created by <a href="https://github.com/bengoodheart" target="_blank"> Benjamin Goodheart. </a> &nbsp; &#128075;
@@ -9,6 +11,7 @@
             Thanks for stopping by!! &#128516; LGM!!!! &#9918;
             </span>
         </b-card>
+        </b-container>
     </div>
 </template>
 <script>
