@@ -1,7 +1,7 @@
 <template>
 
 <b-container >
-  
+  <BaseballAPI ref="api"></BaseballAPI>
   <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
   
   <StillInFirst></StillInFirst>
@@ -30,6 +30,9 @@ export default {
     console: () => console,
     window: () => window,
   },
+  created(){
+    this.console.log(this.$refs)
+  }
 };
 </script>
 

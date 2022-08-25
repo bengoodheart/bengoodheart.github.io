@@ -40,33 +40,20 @@ export default {
     NLEastTable: Array,
     NLStandings: Array,
   },
-  setup() {        
-    async function getNLEastTable() {
+  setup(props) {        
+    async function getNLTable() {
       const temp_arr = ref([]);
+      const NLTable = ref(props.NLStandings)
+      console.log(NLTable)
 
-      //Retrieve the table from the Baseball API module
-      /**
-      await makeRestCall(function (response) {
-        let data = response.data.response;
-        for (let i = 0; i < data[0].length; i++) {
-          let standings = data[0][i];
-          let team_obj = standings["group"];
-          let league = team_obj["name"];
-
-          if (league == NL_EAST) {
-            let team_name = standings["team"]["name"];
-            let pos = standings["position"];
-            temp_arr.value.push({ pos: pos, team_name: team_name });
-          }
-        }
-        NLEastStandings.value = temp_arr.value;
-        console.log(NLEastStandings.value);
-      });*/
     }
     return {
+      getNLTable,
+      
     };
   },
   created() {
+    this.getNLTable();
   },
 };
 </script>
