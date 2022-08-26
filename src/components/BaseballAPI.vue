@@ -7,6 +7,7 @@
 <script>
 import {ref} from "vue"
 import { NLStandings } from '@/store/NLStandings.js'
+import { NLEastStandings } from '@/store/NLEastStandings.js'
 export default {
     name:'BaseballAPI',
     setup(){
@@ -15,7 +16,9 @@ export default {
         const LEAGUE = ref(1);
         const PONG = ref("PONG");
         const NL = ref("National League")
-        const fetchedStandings= NLStandings();
+        const NL_EAST = ref("NL East")
+        const fetchedLeagueStandings= NLStandings();
+        const fetchDivStandings = NLEastStandings();
 
         //const NYM = "New York Mets";
 
@@ -64,12 +67,30 @@ export default {
                         temp_arr.value.push({ pos: pos, team_name: team_name });
                     }
                     }
-                    fetchedStandings.current_table = temp_arr.value;
+                    fetchedLeagueStandings.current_table = temp_arr.value;
                     console.log("Standings set:")
-                    console.log(fetchedStandings.current_table);
-                    
+                    console.log(fetchedLeagueStandings.current_table);
             })
         }
+
+        async function getNLEastTable(){
+        const temp_arr = ref([]);
+        await makeRestCall(function (response) {
+            let data = response.data.response;
+            for (let i = 0; i < data[0].length; i++) {
+            let standings = data[0][i];
+            let team_obj = standings["group"];
+            let league = team_obj["name"];
+            if (league == NL_EAST.value) {
+                let team_name = standings["team"]["name"];
+                let pos = standings["position"];
+                temp_arr.value.push({ pos: pos, team_name: team_name });
+            }
+            }
+            fetchDivStandings.current_table = temp_arr.value;
+            console.log(NLEastStandings.value);
+      });
+    }
         return { 
             SEASON,
             LEAGUE,
@@ -79,11 +100,13 @@ export default {
             pingAPI,
             getNLLeagueTable,
             NLStandings,
-            fetchedStandings
+            fetchedStandings: fetchedLeagueStandings,
+            getNLEastTable,
          }
     },
     async created(){
         this.getNLLeagueTable();   
+        this.getNLEastTable();
     }
 }
 </script>

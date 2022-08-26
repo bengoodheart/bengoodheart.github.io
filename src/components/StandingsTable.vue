@@ -12,7 +12,7 @@
         <b-button block v-b-toggle.accordian-2 variant="primary">NL East Standings</b-button>
       </b-card-header>
       <b-collapse id="accordian-2" accordian="my-accordian" role="tabpanel">
-        <b-table :items="NLEastStandings"></b-table>
+        <b-table :items="NLEastTable.current_table"></b-table>
       </b-collapse>
     </b-card>
   </div>
@@ -21,6 +21,7 @@
 /*eslint-disable*/
 import { ref, computed, onMounted } from "vue";
 import { NLStandings } from "@/store/NLStandings.js"
+import { NLEastStandings}  from "@/store/NLEastStandings.js"
 
 const SEASON = 2022;
 const LEAGUE = 1;
@@ -39,9 +40,10 @@ export default {
   name: "StandingsTable",
   setup() {        
     const NLTable = NLStandings();
-    
+    const NLEastTable = NLEastStandings();
     return {
-      NLTable
+      NLTable,
+      NLEastTable,
     };
   },
   created() {
