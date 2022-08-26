@@ -64,7 +64,10 @@ export default {
                         temp_arr.value.push({ pos: pos, team_name: team_name });
                     }
                     }
-                    fetchedStandings.list = temp_arr;
+                    fetchedStandings.current_table = temp_arr.value;
+                    console.log("Standings set:")
+                    console.log(fetchedStandings.current_table);
+                    
             })
         }
         return { 

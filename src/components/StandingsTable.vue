@@ -5,7 +5,7 @@
         <b-button block v-b-toggle.accordian-1 variant="primary"> National League Standings</b-button>
       </b-card-header>
       <b-collapse id="accordian-1" accordian="my-accordian" role="tabpanel">
-        <b-table :items="NLStandings"></b-table>
+        <b-table :items="NLTable.current_table"></b-table>
       </b-collapse>
 
       <b-card-header header-tag="header" class="p-1" role="tab" evariant="primary">
@@ -37,24 +37,15 @@ const OPTIONS = {
 
 export default {
   name: "StandingsTable",
-  props:{
-    NLEastTable: Array,
-    NLStandings: Array,
-  },
-  setup(props) {        
-    async function getNLTable() {
-      const temp_arr = ref([]);
-      const NLTable = ref(props.NLStandings)
-      console.log(NLTable)
-
-    }
+  setup() {        
+    const NLTable = NLStandings();
+    
     return {
-      getNLTable,
-      
+      NLTable
     };
   },
   created() {
-    this.getNLTable();
+    
   },
 };
 </script>
