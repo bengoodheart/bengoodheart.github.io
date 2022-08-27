@@ -1,15 +1,14 @@
 <template>
 
 <b-container >
-  <BaseballAPI ref="api"></BaseballAPI>
-  <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
+  <BaseballAPI></BaseballAPI>
   
-  <StillInFirst></StillInFirst>
-  <StandingsTable></StandingsTable>
+  <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
+  <StillInFirst :LeagueTable="storeLeague.current_table" v-if="storeLeague.loading==false && storeLeague.table_fetched==true"></StillInFirst>
+  <StandingsTable :LeagueTable="storeLeague.current_table" v-if="storeLeague.loading==false && storeLeague.table_fetched==true"></StandingsTable>
   <DonateFooter></DonateFooter>
   </b-container>
 
-  <BaseballAPI></BaseballAPI>
 </template>
 
 <script>
@@ -28,14 +27,20 @@ export default {
     DonateFooter,
     BaseballAPI,
 },
+setup(){
+  const storeLeague = NLStandings();
+
+
+
+  return{ 
+      storeLeague
+  }
+},
 computed: {
     console: () => console,
     window: () => window,
-    
   },
   created(){
-    const fetchedStandings = NLStandings();
-    this.console.log(fetchedStandings)
   }
 };
 </script>

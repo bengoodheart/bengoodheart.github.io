@@ -1,115 +1,64 @@
 <template>
   <div>
-    <b-card bg-variant="primary" text-variant="white" class="shadow"  v-if="divFirst.value == true">
-      <b-badge text-variant="secondary"><h1>YES!</h1></b-badge>
-      <p>
-        The New York Metropolitons are still in first in the <span v-if="divFirst.value == true"> NL East</span><span v-if="leagueFirst.value == true"> and the National league</span>!
-      </p>
+    <b-card>
+      <b-badge variant="primary" v-if="firstAnswer.value==true"><h3>YES</h3></b-badge>
+      <b-img thumbnail src="@/assets/notinfirst.jpg" fluid v-if="firstAnswer.value == false"></b-img>
     </b-card>
-    <b-card bg-variant="danger" text-variant="white" v-else > <h3>Uh....</h3> </b-card> 
   </div>
 </template>
 
 <script>
 
-import { ref, computed } from "vue"
 
-/**
- * Constant Declarations
- */
-
-const SEASON = 2022;
-const LEAGUE = 1;
-const PONG = "PONG";
-const NL_EAST = "NL East";
-//const NYM = "New York Mets";
-//const POS = 1;
-
-const OPTIONS = {
-  method: "GET",
-  url: "https://api-baseball.p.rapidapi.com/standings",
-  params: { season: SEASON, league: LEAGUE },
-  headers: {
-    "X-RapidAPI-Key": process.env.VUE_APP_X_RAPID_API_KEY,
-    "X-RapidAPI-Host": "api-baseball.p.rapidapi.com",
-  },
-};
+import { NLStandings } from '@/store/NLStandings.js';
+import { NLEastStandings } from '@/store/NLEastStandings.js';
+import { EitherFirst } from '@/store/EitherFirst.js';
 
 export default{
   name: "StillInFirst",
-  setup(){
-    const divFirst = ref(false);
-    const leagueFirst = ref(false);
-
-    function makeRestCall(func) {
-      const axios = require("axios");
-      axios
-        .request(OPTIONS)
-        .then(func)
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
-    function pingAPI() {
-      makeRestCall(function () {
-        console.log(PONG);
-      });
-    }
-    async function getNLEastPos() {
-      const temp_arr = ref([]);
-      await makeRestCall(function (response) {
-        let data = response.data.response;
-        for (let i = 0; i < data[0].length; i++) {
-          let standings = data[0][i];
-          let team_obj = standings["group"];
-          let division = team_obj["name"];
-          if (division === NL_EAST) {
-            let team_name = standings["team"]["name"];
-            temp_arr.value.push(team_name)
-          }
-        }
-        let pos = temp_arr.value.indexOf("New York Mets")
-        pos = pos + 1;
-        if(pos == 1){
-          divFirst.value = computed(() =>{
-            return true;
-          });
-        }
-      });
-    }
-    async function getNLLeaguePos(){
-      const temp_arr = ref([]);
-      await makeRestCall(function (response) {
-        let data = response.data.response;
-        console.log(data)
-        for (let i = 0; i < data[0].length; i++) {
-          let standings = data[0][i];
-          let team_obj = standings["group"];
-          let league = team_obj["name"];
-          if (league == "National League"){
-            let team_name = standings["team"]['name']
-            temp_arr.value.push(team_name);
-          }
-        }
-        let pos = (temp_arr.value.indexOf("New York Mets")) + 1
-        if(pos == 1){
-          leagueFirst.value = computed(() => {
-            return true
-          })
-        }
-      })
-    }
-    return { 
-      pingAPI, 
-      getNLEastPos,
-      getNLLeaguePos, 
-      divFirst,
-      leagueFirst,
-      };
+  props: {
   },
-  created(){
-    this.getNLEastPos() 
-    this.getNLLeaguePos()
+  setup(){
+    const NYM = "New York Mets"
+    const NLTable = NLStandings();
+    const NLEastTable = NLEastStandings();
+    const firstAnswer = EitherFirst();
+    const firstInLeague = NLTable.getFirst.team_name
+    const firstInDiv = NLEastTable.getFirst.team_name
+
+    async function metsLeagueFirst(){
+      const result = firstInLeague == NYM ? true: false;
+      return result
+    }
+    async function metsDivFirst(){
+      const result = firstInDiv == NYM ? true: false;
+      return result
+    } 
+    function inFirstAtAll(){
+      const league = metsLeagueFirst();
+      const div = metsDivFirst();
+      const result = league || div == true ? true : false 
+      firstAnswer.value = result;
+      return firstAnswer.value
+    }
+    
+
+
+  return {
+    NLTable,
+    firstInLeague,
+    firstInDiv,
+    metsLeagueFirst,
+    metsDivFirst,
+    inFirstAtAll,
+
+  }
+  },
+  async created(){
+    await console.log(this.inFirstAtAll())
   }
 }
 </script>
+<style>
+
+</style>

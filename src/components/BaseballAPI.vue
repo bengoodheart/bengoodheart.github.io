@@ -35,6 +35,8 @@ export default {
         /** REST Functions */
 
         function makeRestCall(func) {
+        
+
         const axios = require("axios");
         axios
             .request(OPTIONS)
@@ -53,6 +55,7 @@ export default {
         }
 
         async function getNLLeagueTable() {
+            fetchedLeagueStandings.loading = true;
             let temp_arr = ref([])
             await makeRestCall(function(response) {
                     let data = response.data.response;
@@ -70,6 +73,8 @@ export default {
                     fetchedLeagueStandings.current_table = temp_arr.value;
                     console.log("Standings set:")
                     console.log(fetchedLeagueStandings.current_table);
+                    fetchedLeagueStandings.table_fetched = true;
+                    fetchedLeagueStandings.loading = false;
             })
         }
 
@@ -88,7 +93,9 @@ export default {
             }
             }
             fetchDivStandings.current_table = temp_arr.value;
-            console.log(NLEastStandings.value);
+            fetchDivStandings.table_fetched = true;
+            console.log("Div standings set: " + fetchDivStandings.table_fetched)
+
       });
     }
         return { 
@@ -105,8 +112,8 @@ export default {
          }
     },
     async created(){
-        this.getNLLeagueTable();   
-        this.getNLEastTable();
+        await this.getNLLeagueTable();   
+       await this.getNLEastTable();
     }
 }
 </script>

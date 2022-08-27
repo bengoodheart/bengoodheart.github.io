@@ -8,14 +8,20 @@ export const NLStandings = defineStore({
   state: () =>({
     current_table: [],
     updated: Date,
-    table_fetched: false
+    table_fetched: false,
+    loading: false,
   }),
   getters: {
-    stampUpdated(state){
-        state.table_fetched = true
-        return state;
+    getFirst(state){
+        if (state.current_table.length > 0){
+            return state.current_table[0]
+        } else {
+            return "error"
+        }
+    }
     },
-    },
-  actions:{}
+  actions:{
+
+  }
 
 })

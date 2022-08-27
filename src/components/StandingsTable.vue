@@ -19,35 +19,29 @@
 </template>
 <script>
 /*eslint-disable*/
-import { ref, computed, onMounted } from "vue";
+import { ref } from "vue";
 import { NLStandings } from "@/store/NLStandings.js"
 import { NLEastStandings}  from "@/store/NLEastStandings.js"
 
-const SEASON = 2022;
-const LEAGUE = 1;
-const NL_EAST = "NL East";
-const OPTIONS = {
-  method: "GET",
-  url: "https://api-baseball.p.rapidapi.com/standings",
-  params: { season: SEASON, league: LEAGUE },
-  headers: {
-    "X-RapidAPI-Key": process.env.VUE_APP_X_RAPID_API_KEY,
-    "X-RapidAPI-Host": "api-baseball.p.rapidapi.com",
-  },
-};
 
 export default {
   name: "StandingsTable",
+  props:{
+    LeagueTable: Array,
+    DivTable: Array,
+  },
   setup() {        
     const NLTable = NLStandings();
     const NLEastTable = NLEastStandings();
+    
     return {
       NLTable,
       NLEastTable,
     };
   },
   created() {
-    
+    console.log(this.NLTable.current_table)
+    console.log(this.NLEastTable)
   },
 };
 </script>
