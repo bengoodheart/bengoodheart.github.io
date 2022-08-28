@@ -2,7 +2,7 @@
   <div>
     <b-card>
       <b-badge variant="primary" v-if="firstAnswer.value==true"><h3>YES</h3></b-badge>
-      <p> The New York Metropolitans are currently in first in <span v-if="NLEastTable.metsDivFirst == true">the NL East</span><span v-if="NLTable.metsLeagueFirst == true" > and the National League</span>!</p>
+      <p> The New York Metropolitans are currently in first in <span v-if="NLEastTable.metsFirstDiv == true">the NL East</span><span v-if="NLTable.metsFirstLeague == true" > and the National League</span>!</p>
       <b-badge variant="danger" v-if="firstAnswer.value==false">Nope</b-badge>
       <b-img thumbnail src="@/assets/notinfirst.jpg" fluid v-if="firstAnswer.value == false"></b-img>
     </b-card>
