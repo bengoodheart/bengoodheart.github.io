@@ -7,7 +7,6 @@
     <b-card v-if="storeLeague.loading==true || storeDiv.loading==true">
     <b-spinner  variant="primary"></b-spinner>
     <p> <b-badge variant="secondary">Uhhh</b-badge> </p>
-
   </b-card>
   <StillInFirst :LeagueTable="storeLeague.current_table" v-if="storeLeague.loading==false && storeLeague.table_fetched==true"></StillInFirst>
   <StandingsTable :LeagueTable="storeLeague.current_table" v-if="storeLeague.loading==false && storeLeague.table_fetched==true"></StandingsTable>
