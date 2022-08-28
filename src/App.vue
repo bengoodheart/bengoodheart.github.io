@@ -2,8 +2,13 @@
 
 <b-container >
   <BaseballAPI></BaseballAPI>
-  
+
   <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
+    <b-card v-if="storeLeague.loading==true || storeDiv.loading==true">
+    <b-spinner  variant="primary"></b-spinner>
+    <p> <b-badge variant="secondary">Uhhh</b-badge> </p>
+
+  </b-card>
   <StillInFirst :LeagueTable="storeLeague.current_table" v-if="storeLeague.loading==false && storeLeague.table_fetched==true"></StillInFirst>
   <StandingsTable :LeagueTable="storeLeague.current_table" v-if="storeLeague.loading==false && storeLeague.table_fetched==true"></StandingsTable>
   <DonateFooter></DonateFooter>
@@ -17,6 +22,7 @@ import StandingsTable from "./components/StandingsTable.vue"
 import DonateFooter from "./components/DonateFooter.vue"
 import BaseballAPI from "./components/BaseballAPI.vue"
 import { NLStandings } from "@/store/NLStandings.js"
+import { NLEastStandings } from "./store/NLEastStandings.js";
 
 
 export default {
@@ -29,11 +35,12 @@ export default {
 },
 setup(){
   const storeLeague = NLStandings();
-
+  const storeDiv = NLEastStandings();
 
 
   return{ 
-      storeLeague
+      storeLeague,
+      storeDiv,
   }
 },
 computed: {

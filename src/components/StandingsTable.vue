@@ -17,6 +17,7 @@
     </b-card>
   </div>
 </template>
+
 <script>
 /*eslint-disable*/
 import { ref } from "vue";
@@ -33,7 +34,7 @@ export default {
   setup() {        
     const NLTable = NLStandings();
     const NLEastTable = NLEastStandings();
-    
+
     return {
       NLTable,
       NLEastTable,

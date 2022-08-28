@@ -7,6 +7,7 @@ export const NLEastStandings = defineStore({
         updated: Date,
         table_fetched: false,
         loading: false,
+        metsDivFirst: false,
       }),
       getters: {
         getFirst(state){

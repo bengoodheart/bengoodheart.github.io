@@ -10,6 +10,7 @@ export const NLStandings = defineStore({
     updated: Date,
     table_fetched: false,
     loading: false,
+    metsLeagueFirst: false
   }),
   getters: {
     getFirst(state){
