@@ -4,7 +4,7 @@
 
 stillinfirst is a Progressive Web Application written in Vue 3.
 
-It answers question I've wrestled with all season: Are the Mets still in first right now? You can see the app live on [https://metsinfirst.com](metsinfirst.com).
+It answers question I've wrestled with all season: Are the Mets still in first right now? You can see the app live on [metsinfirst.com](https://metsinfirst.com).
 
 ## Details
 
