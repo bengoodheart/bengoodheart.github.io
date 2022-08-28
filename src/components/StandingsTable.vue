@@ -2,7 +2,8 @@
   <div class="accordian" role="tablist">
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle.accordian-1 variant="primary"> National League Standings</b-button>
+        <b-button block v-b-toggle.accordian-1 variant="primary">
+          National League Standings</b-button>
       </b-card-header>
       <b-collapse id="accordian-1" accordian="my-accordian" role="tabpanel">
         <b-table :items="NLTable.current_table"></b-table>
@@ -19,19 +20,12 @@
 </template>
 
 <script>
-/*eslint-disable*/
-import { ref } from "vue";
-import { NLStandings } from "@/store/NLStandings.js"
-import { NLEastStandings}  from "@/store/NLEastStandings.js"
-
+import { NLStandings } from "@/store/NLStandings.js";
+import { NLEastStandings } from "@/store/NLEastStandings.js";
 
 export default {
   name: "StandingsTable",
-  props:{
-    LeagueTable: Array,
-    DivTable: Array,
-  },
-  setup() {        
+  setup() {
     const NLTable = NLStandings();
     const NLEastTable = NLEastStandings();
 
@@ -41,8 +35,6 @@ export default {
     };
   },
   created() {
-    console.log(this.NLTable.current_table)
-    console.log(this.NLEastTable)
   },
 };
 </script>

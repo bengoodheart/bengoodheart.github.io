@@ -1,65 +1,62 @@
 <template>
-    <div>
-        
-    </div>
+    <div></div>
 </template>
 
 <script>
-import {ref} from "vue"
-import { NLStandings } from '@/store/NLStandings.js'
-import { NLEastStandings } from '@/store/NLEastStandings.js'
+import { ref } from "vue";
+import { NLStandings } from "@/store/NLStandings.js";
+import { NLEastStandings } from "@/store/NLEastStandings.js";
 export default {
-    name:'BaseballAPI',
-    setup(){
+    name: "BaseballAPI",
+    setup() {
         /** Constant Declaration */
         const SEASON = ref(2022);
         const LEAGUE = ref(1);
         const PONG = ref("PONG");
-        const NL = ref("National League")
-        const NL_EAST = ref("NL East")
-        const fetchedLeagueStandings= NLStandings();
+        const NL = ref("National League");
+        const NL_EAST = ref("NL East");
+        const fetchedLeagueStandings = NLStandings();
         const fetchDivStandings = NLEastStandings();
 
         //const NYM = "New York Mets";
 
         const OPTIONS = {
-        method: "GET",
-        url: "https://api-baseball.p.rapidapi.com/standings",
-        params: { season: SEASON.value, league: LEAGUE.value },
-        headers: {
-            "X-RapidAPI-Key": process.env.VUE_APP_X_RAPID_API_KEY,
-            "X-RapidAPI-Host": "api-baseball.p.rapidapi.com",
-        },
+            method: "GET",
+            url: "https://api-baseball.p.rapidapi.com/standings",
+            params: { season: SEASON.value, league: LEAGUE.value },
+            headers: {
+                "X-RapidAPI-Key": process.env.VUE_APP_X_RAPID_API_KEY,
+                "X-RapidAPI-Host": "api-baseball.p.rapidapi.com",
+            },
         };
 
         /** REST Functions */
 
         function makeRestCall(func) {
-        
-
-        const axios = require("axios");
-        axios
-            .request(OPTIONS)
-            .then(func)
-            .catch(function (error) {
-            console.error(error);
-            });
+            const axios = require("axios");
+            axios
+                .request(OPTIONS)
+                .then(func)
+                .catch(function (error) {
+                    console.error(error);
+                });
         }
 
         /** Service Functions */
+
         async function pingAPI() {
-            await makeRestCall(function(response) {
-                console.log(response)
-                console.log(PONG)
-            })
+            await makeRestCall(function (response) {
+                console.log(response);
+                console.log(PONG);
+            });
         }
 
         async function getNLLeagueTable() {
             fetchedLeagueStandings.loading = true;
-            let temp_arr = ref([])
-            await makeRestCall(function(response) {
-                    let data = response.data.response;
-                    for (let i = 0; i < data[0].length; i++) {
+            let temp_arr = ref([]);
+            await makeRestCall(function (response) {
+                let data = response.data.response;
+                for (let i = 0; i < data[0].length; i++) {
                     let standings = data[0][i];
                     let team_obj = standings["group"];
                     let league = team_obj["name"];
@@ -69,54 +66,52 @@ export default {
                         let pos = standings["position"];
                         temp_arr.value.push({ pos: pos, team_name: team_name });
                     }
-                    }
-                    fetchedLeagueStandings.current_table = temp_arr.value;
-                    console.log("Standings set:")
-                    console.log(fetchedLeagueStandings.current_table);
-                    fetchedLeagueStandings.table_fetched = true;
-                    fetchedLeagueStandings.loading = false;
-            })
+                }
+                fetchedLeagueStandings.current_table = temp_arr.value;
+                console.log("Standings set:");
+                console.log(fetchedLeagueStandings.current_table);
+                fetchedLeagueStandings.table_fetched = true;
+                fetchedLeagueStandings.loading = false;
+            });
         }
 
-        async function getNLEastTable(){
-        const temp_arr = ref([]);
-        await makeRestCall(function (response) {
-            let data = response.data.response;
-            for (let i = 0; i < data[0].length; i++) {
-            let standings = data[0][i];
-            let team_obj = standings["group"];
-            let league = team_obj["name"];
-            if (league == NL_EAST.value) {
-                let team_name = standings["team"]["name"];
-                let pos = standings["position"];
-                temp_arr.value.push({ pos: pos, team_name: team_name });
-            }
-            }
-            fetchDivStandings.current_table = temp_arr.value;
-            fetchDivStandings.table_fetched = true;
-            console.log("Div standings set: " + fetchDivStandings.table_fetched)
-
-      });
-    }
-        return { 
+        async function getNLEastTable() {
+            const temp_arr = ref([]);
+            await makeRestCall(function (response) {
+                let data = response.data.response;
+                for (let i = 0; i < data[0].length; i++) {
+                    let standings = data[0][i];
+                    let team_obj = standings["group"];
+                    let league = team_obj["name"];
+                    if (league == NL_EAST.value) {
+                        let team_name = standings["team"]["name"];
+                        let pos = standings["position"];
+                        temp_arr.value.push({ pos: pos, team_name: team_name });
+                    }
+                }
+                fetchDivStandings.current_table = temp_arr.value;
+                fetchDivStandings.table_fetched = true;
+                console.log("Div standings set: " + fetchDivStandings.table_fetched);
+            });
+        }
+        return {
             SEASON,
             LEAGUE,
             PONG,
             OPTIONS,
-            makeRestCall,
-            pingAPI,
-            getNLLeagueTable,
             NLStandings,
             fetchedStandings: fetchedLeagueStandings,
             getNLEastTable,
-         }
+            makeRestCall,
+            pingAPI,
+            getNLLeagueTable,
+        };
     },
-    async created(){
-        await this.getNLLeagueTable();   
-       await this.getNLEastTable();
-    }
-}
+    async created() {
+        await this.getNLLeagueTable();
+        await this.getNLEastTable();
+    },
+};
 </script>
 <style>
-    
 </style>
