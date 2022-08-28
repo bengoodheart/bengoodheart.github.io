@@ -6,7 +6,8 @@
       </b-badge>
       <br />
       The New York Metropolitans are currently in first in
-      <span v-if="NLEastTable.metsDivFirst == true">the NL East</span><span v-if="NLTable.metsDivFirst == true"> and the
+      <span v-if="NLEastTable.metsDivFirst === true">the NL East</span><span v-if="NLTable.metsLeagueFirst === true">
+        and the
         National League</span>!
       <b-badge variant="danger" v-if="firstAnswer.value == false">
         <h1>Nope</h1>
@@ -42,7 +43,7 @@ export default {
     }
     async function getMetsDivFirst() {
       const result = (await firstInDiv) == NYM ? true : false;
-      NLEastTable.metsDivFirst = result;
+      console.log(NLEastTable.metsDivFirst = result);
       return result;
     }
     async function inFirstAtAll() {
@@ -67,10 +68,10 @@ export default {
     };
   },
   async created() {
-    await console.log(this.inFirstAtAll());
-    await this.metsDivFirst();
-    await this.metsLeagueFirst();
-    console.log(await this.NLEastTable.metsDivFirst);
+
+    await this.inFirstAtAll();
+    await this.getMetsDivFirst();
+    await this.getMetsLeagueFirst();
   },
 };
 </script>

@@ -39,31 +39,31 @@
 <script>
 import { ref } from "vue";
 export default {
-    name: "DonateFooter",
-    setup() {
-        const PAYPAL_LINK = ref(
-            "https://www.paypal.com/donate/?business=DZQG7DBS8M96U&no_recurring=0&item_name=If+you+enjoy+metsinfirst.com%2C+please+consider+donating+to+keep+the+services+up+and+running.+Thanks%21&currency_code=USD"
-        );
-        const GH_LINK = ref("https://github.com/bengoodheart");
-        const VUE_LINK = ref("https://cli.vuejs.org/");
-        const BS_LINK = ref("https://bootstrap-vue.org/");
-        const PINIA_LINK = ref("https://pinia.vuejs.org/");
-        const DALLE_LINK = ref("https://openai.com/dall-e-2/");
-        const BBAPI_LINK = ref("https://rapidapi.com/api-sports/api/api-baseball/");
+  name: "DonateFooter",
+  setup() {
+    const PAYPAL_LINK = ref(
+      "https://www.paypal.com/donate/?business=DZQG7DBS8M96U&no_recurring=0&item_name=If+you+enjoy+metsinfirst.com%2C+please+consider+donating+to+keep+the+services+up+and+running.+Thanks%21&currency_code=USD"
+    );
+    const GH_LINK = ref("https://github.com/bengoodheart");
+    const VUE_LINK = ref("https://cli.vuejs.org/");
+    const BS_LINK = ref("https://bootstrap-vue.org/");
+    const PINIA_LINK = ref("https://pinia.vuejs.org/");
+    const DALLE_LINK = ref("https://openai.com/dall-e-2/");
+    const BBAPI_LINK = ref("https://rapidapi.com/api-sports/api/api-baseball/");
 
-        const showMore = ref(false);
+    const showMore = ref(false);
 
-        return {
-            PAYPAL_LINK,
-            GH_LINK,
-            VUE_LINK,
-            BS_LINK,
-            PINIA_LINK,
-            DALLE_LINK,
-            BBAPI_LINK,
-            showMore,
-        };
-    },
+    return {
+      PAYPAL_LINK,
+      GH_LINK,
+      VUE_LINK,
+      BS_LINK,
+      PINIA_LINK,
+      DALLE_LINK,
+      BBAPI_LINK,
+      showMore,
+    };
+  },
 };
 </script>
 <style lang=""></style>

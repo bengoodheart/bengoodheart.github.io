@@ -2,19 +2,35 @@
   <b-container>
     <BaseballAPI></BaseballAPI>
 
-    <b-card text-variant="primary" class="shadow"><h2>Are the Mets Still In First?</h2></b-card>
+    <b-card text-variant="primary" class="shadow">
+      <h2>Are the Mets Still In First?</h2>
+    </b-card>
     <b-card v-if="storeLeague.loading == true || storeDiv.loading == true">
       <b-spinner variant="primary"></b-spinner>
-      <p><b-badge variant="secondary">Uhhh</b-badge></p>
+      <p>
+        <b-badge variant="secondary">Uhhh</b-badge>
+      </p>
     </b-card>
     <StillInFirst
       :LeagueTable="storeLeague.current_table"
-      v-if="storeLeague.loading == false && storeLeague.table_fetched == true">
-      </StillInFirst>
+      v-if="
+        storeLeague.loading == false &&
+        storeLeague.table_fetched == true &&
+        storeDiv.loading == false &&
+        storeDiv.table_fetched == true
+      "
+    >
+    </StillInFirst>
     <StandingsTable
       :LeagueTable="storeLeague.current_table"
-      v-if="storeLeague.loading == false && storeLeague.table_fetched == true">
-      </StandingsTable>
+      v-if="
+        storeLeague.loading == false &&
+        storeLeague.table_fetched == true &&
+        storeDiv.loading == false &&
+        storeDiv.table_fetched == true
+      "
+    >
+    </StandingsTable>
     <DonateFooter></DonateFooter>
   </b-container>
 </template>
