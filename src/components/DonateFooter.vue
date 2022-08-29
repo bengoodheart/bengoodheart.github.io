@@ -22,7 +22,7 @@
             <a :href="PINIA_LINK" target="_blank">Pinia </a>.
             <br />
             API provided by
-            <a :href="BBAPI_LINK" target="_blank">Baseball-API</a>
+            <a :href="BBAPI_LINK" target="_blank">API-Baseball</a>
             <br />
             Image generation by <a :href="DALLE_LINK">DALL-E 2</a>. Special
             thanks to Mike and Brien for the access.
