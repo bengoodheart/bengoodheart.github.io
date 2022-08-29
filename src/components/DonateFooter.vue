@@ -8,7 +8,7 @@
           &#128075;
           <br />
           If you enjoy this tool, please consider
-          <a :href="PAYPAL_LINK" target="_blank"> donating </a> to keep the
+          <a :href="PAYPAL_LINK" target="_blank"> donating </a> a small amount to keep the
           overhead bills paid and my coffee cup full. &#9749;
           <br />
           Thanks for stopping by!! &#128516; LGM!!!! &#9918;
@@ -18,7 +18,7 @@
         <span style="font-size: 10px">
           <p>
             Created using <a :href="VUE_LINK" target="_blank">Vue 3 CLI </a>,
-            <a :href="BS_LINK" target="_blank"> Bootstrap </a>, and
+            <a :href="BS_LINK" target="_blank"> Bootstrap-Vue </a>, and
             <a :href="PINIA_LINK" target="_blank">Pinia </a>.
             <br />
             API provided by
