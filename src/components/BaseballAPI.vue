@@ -68,8 +68,6 @@ export default {
                     }
                 }
                 fetchedLeagueStandings.current_table = temp_arr.value;
-                console.log("Standings set:");
-                console.log(fetchedLeagueStandings.current_table);
                 fetchedLeagueStandings.table_fetched = true;
                 fetchedLeagueStandings.loading = false;
             });
@@ -91,7 +89,6 @@ export default {
                 }
                 fetchDivStandings.current_table = temp_arr.value;
                 fetchDivStandings.table_fetched = true;
-                console.log("Div standings set: " + fetchDivStandings.table_fetched);
             });
         }
         return {

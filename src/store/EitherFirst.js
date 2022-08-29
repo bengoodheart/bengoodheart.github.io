@@ -9,9 +9,8 @@ export const EitherFirst = defineStore({
         },
     }),
     getters: {
-        whatsTheDeal(state){
+        whatsTheDeal(state) {
             return state.value
         }
     }
 });
-    

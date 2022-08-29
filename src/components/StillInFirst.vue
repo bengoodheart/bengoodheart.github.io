@@ -43,7 +43,7 @@ export default {
     }
     async function getMetsDivFirst() {
       const result = (await firstInDiv) == NYM ? true : false;
-      console.log(NLEastTable.metsDivFirst = result);
+      NLEastTable.metsDivFirst = result;
       return result;
     }
     async function inFirstAtAll() {
