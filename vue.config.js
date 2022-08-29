@@ -11,6 +11,11 @@ module.exports = defineConfig({
     },
   },
   chainWebpack: (config) => {
+    config.plugin("html")
+    .tap(args => {
+      args[0].title = 'Are the Mets Still In First?'
+      return args
+    })
     config.module
       .rule("vue")
       .use("vue-loader")
