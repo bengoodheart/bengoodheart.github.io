@@ -17,7 +17,8 @@
         evariant="primary"
       >
         <b-button block v-b-toggle.accordian-2 variant="primary"
-          >NL East Standings</b-button>
+          >NL East Standings</b-button
+        >
       </b-card-header>
       <b-collapse id="accordian-2" accordian="my-accordian" role="tabpanel">
         <b-table :items="NLEastTable.current_table"></b-table>
