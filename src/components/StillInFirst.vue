@@ -4,16 +4,26 @@
       <b-badge variant="primary" v-if="firstAnswer.value == true">
         <h1>YES</h1>
       </b-badge>
-      <br />
-      The New York Metropolitans are currently in first in
-      <span v-if="NLEastTable.metsDivFirst === true">the NL East</span><span v-if="NLTable.metsLeagueFirst === true">
-        and the
-        National League</span>!
+
+      <span v-if="NLEastTable.metsDivFirst === true">
+        <br />
+        The New York Metropolitans are currently in first in the NL East</span
+      ><span v-if="NLTable.metsLeagueFirst === true">
+        and the National League</span
+      >
+      <span v-if="firstAnswer.value == true">!</span>
+
       <b-badge variant="danger" v-if="firstAnswer.value == false">
         <h1>Nope</h1>
       </b-badge>
       <br />
-      <b-img thumbnail src="@/assets/notinfirst.jpg" fluid v-if="firstAnswer.value == false"></b-img>
+      <br />
+      <b-img
+        thumbnail
+        src="@/assets/notinfirst.jpg"
+        fluid
+        v-if="firstAnswer.value == false"
+      ></b-img>
     </b-card>
   </div>
 </template>
@@ -49,7 +59,7 @@ export default {
     async function inFirstAtAll() {
       const league = getMetsLeagueFirst();
       const div = getMetsDivFirst();
-      const result = league || div == true ? true : false;
+      const result = league == true || div == true ? true : false;
       firstAnswer.value = await result;
       return firstAnswer.value;
     }
@@ -68,12 +78,10 @@ export default {
     };
   },
   async created() {
-
     await this.inFirstAtAll();
     await this.getMetsDivFirst();
     await this.getMetsLeagueFirst();
   },
 };
 </script>
-<style>
-</style>
+<style></style>
