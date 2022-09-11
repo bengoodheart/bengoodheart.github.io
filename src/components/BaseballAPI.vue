@@ -90,6 +90,7 @@ export default {
         }
 
         async function getNLEastTable() {
+            fetchDivStandings.loading = true;
             const temp_arr = ref([]);
             await makeRestCall(function (response) {
                 let data = response.data.response;
@@ -100,11 +101,15 @@ export default {
                     if (league == NL_EAST.value) {
                         let team_name = standings["team"]["name"];
                         let pos = standings["position"];
-                        temp_arr.value.push({ pos: pos, team_name: team_name });
+                        let num_rec = getNumRecord(standings)
+                        let pcent_rec = getPercentRecord(standings)
+                        temp_arr.value.push({ pos: pos, team_name: team_name, num_rec: num_rec, pcent_rec: pcent_rec });
                     }
                 }
                 fetchDivStandings.current_table = temp_arr.value;
                 fetchDivStandings.table_fetched = true;
+                fetchDivStandings.loading = false;
+
             });
         }
         return {
