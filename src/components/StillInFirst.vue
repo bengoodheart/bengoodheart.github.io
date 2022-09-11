@@ -48,6 +48,7 @@ export default {
 
     async function getMetsLeagueFirst() {
       const result = (await firstInLeague) == NYM ? true : false;
+      console.log(result)
       NLTable.metsLeagueFirst = result;
       return result;
     }
@@ -57,9 +58,10 @@ export default {
       return result;
     }
     async function inFirstAtAll() {
-      const league = getMetsLeagueFirst();
-      const div = getMetsDivFirst();
-      const result = league == true || div == true ? true : false;
+      const league = await getMetsLeagueFirst();
+      const div = await getMetsDivFirst();
+      const result = (league == true || div == true) ? true : false;
+      console.log(result)
       firstAnswer.value = await result;
       return firstAnswer.value;
     }
