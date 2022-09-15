@@ -91,7 +91,7 @@ export default {
       const first_rec = first_place["num_rec"];
       const second_rec = second_place["num_rec"];
       console.log(first_rec, second_rec);
-      if (first_rec != second_rec) {
+      if (first_rec == second_rec) {
         firstAnswer.tied = true;
       } else {
         firstAnswer.tied = false;
