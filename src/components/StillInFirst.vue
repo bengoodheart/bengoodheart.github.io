@@ -4,14 +4,31 @@
       <b-badge variant="primary" v-if="firstAnswer.value == true">
         <h1>YES</h1>
       </b-badge>
-
-      <span v-if="NLEastTable.metsDivFirst === true">
+      <br />
+      <b-badge
+        variant="warning"
+        v-if="firstAnswer.value == true && firstAnswer.tied == true"
+      >
+        <h3>Kinda....</h3>
+      </b-badge>
+      <span
+        v-if="NLEastTable.metsDivFirst === true && firstAnswer.tied == false"
+      >
         <br />
         The New York Metropolitans are currently in first in the NL East</span
-      ><span v-if="NLTable.metsLeagueFirst === true">
+      >
+      <span
+        v-if="NLEastTable.metsDivFirst === true && firstAnswer.tied == true"
+      >
+        <br />
+        The New York Metropolitans are currently tied for first in the NL East
+      </span>
+
+      <span v-if="NLTable.metsLeagueFirst === true && firstAnswer.tied == false">
         and the National League</span
       >
-      <span v-if="firstAnswer.value == true">!</span>
+      <span v-if="firstAnswer.value == true && firstAnswer.tied == false">!</span>
+      <span v-if="firstAnswer.value == true && firstAnswer.tied == true">...</span>
 
       <b-badge variant="danger" v-if="firstAnswer.value == false">
         <h1>Nope</h1>
@@ -48,7 +65,7 @@ export default {
 
     async function getMetsLeagueFirst() {
       const result = (await firstInLeague) == NYM ? true : false;
-      console.log(result)
+      console.log(result);
       NLTable.metsLeagueFirst = result;
       return result;
     }
@@ -60,10 +77,26 @@ export default {
     async function inFirstAtAll() {
       const league = await getMetsLeagueFirst();
       const div = await getMetsDivFirst();
-      const result = (league == true || div == true) ? true : false;
-      console.log(result)
+      anyTies(NLTable)
+      anyTies(NLEastTable)
+      const result = league == true || div == true ? true : false;
+      console.log(result);
       firstAnswer.value = await result;
       return firstAnswer.value;
+    }
+
+    async function anyTies(table) {
+      const first_place = table.current_table[0];
+      const second_place = table.current_table[1];
+      const first_rec = first_place["num_rec"];
+      const second_rec = second_place["num_rec"];
+      console.log(first_rec, second_rec);
+      if (first_rec != second_rec) {
+        firstAnswer.tied = true;
+      } else {
+        firstAnswer.tied = false;
+      }
+      return firstAnswer.tied;
     }
 
     return {
@@ -77,6 +110,7 @@ export default {
       getMetsDivFirst,
       getMetsLeagueFirst,
       inFirstAtAll,
+      anyTies,
     };
   },
   async created() {

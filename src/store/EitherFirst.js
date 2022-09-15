@@ -7,10 +7,17 @@ export const EitherFirst = defineStore({
             type: Boolean,
             default: false,
         },
+        tied: {
+            type: Boolean,
+            default: false,
+        }
     }),
     getters: {
         whatsTheDeal(state) {
             return state.value
-        }
+        },
+        isTied(state){
+            return state.tied
+        },
     }
 });
