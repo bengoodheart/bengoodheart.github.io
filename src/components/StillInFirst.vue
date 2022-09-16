@@ -4,7 +4,7 @@
       <b-badge variant="primary" v-if="firstAnswer.value == true">
         <h1>YES</h1>
       </b-badge>
-      <br />
+      <br  v-if="firstAnswer.tied == true">
       <b-badge
         variant="warning"
         v-if="firstAnswer.value == true && firstAnswer.tied == true"
