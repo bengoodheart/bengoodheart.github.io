@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <PlayoffCongrats />
     <BaseballAPI></BaseballAPI>
 
     <b-card text-variant="primary" class="shadow">
@@ -40,6 +41,7 @@ import StillInFirst from "./components/StillInFirst.vue";
 import StandingsTable from "./components/StandingsTable.vue";
 import DonateFooter from "./components/DonateFooter.vue";
 import BaseballAPI from "./components/BaseballAPI.vue";
+import PlayoffCongrats from "./components/PlayoffCongrats.vue";
 import { NLStandings } from "@/store/NLStandings.js";
 import { NLEastStandings } from "./store/NLEastStandings.js";
 
@@ -50,6 +52,7 @@ export default {
     StandingsTable,
     DonateFooter,
     BaseballAPI,
+    PlayoffCongrats,
   },
   setup() {
     const storeLeague = NLStandings();
