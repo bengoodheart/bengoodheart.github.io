@@ -51,6 +51,20 @@ export default {
             });
         }
 
+        function getNumRecord(standings){
+            let win = standings['games']['win']
+            let loss = standings['games']['lose']
+            console.log(loss)
+            let win_loss_num = win['total'] + " - " + loss['total'] 
+            return win_loss_num
+        }
+
+        function getPercentRecord(standings){
+            let win = standings['games']['win']
+            let win_pcent = win['percentage'] 
+            return win_pcent
+        }
+
         async function getNLLeagueTable() {
             fetchedLeagueStandings.loading = true;
             let temp_arr = ref([]);
@@ -64,7 +78,9 @@ export default {
                     if (league == NL.value) {
                         let team_name = standings["team"]["name"];
                         let pos = standings["position"];
-                        temp_arr.value.push({ pos: pos, team_name: team_name });
+                        let num_rec = getNumRecord(standings)
+                        let pcent_rec = getPercentRecord(standings)
+                        temp_arr.value.push({ pos: pos, team_name: team_name, num_rec: num_rec, pcent_rec: pcent_rec});
                     }
                 }
                 fetchedLeagueStandings.current_table = temp_arr.value;
@@ -74,6 +90,7 @@ export default {
         }
 
         async function getNLEastTable() {
+            fetchDivStandings.loading = true;
             const temp_arr = ref([]);
             await makeRestCall(function (response) {
                 let data = response.data.response;
@@ -84,11 +101,15 @@ export default {
                     if (league == NL_EAST.value) {
                         let team_name = standings["team"]["name"];
                         let pos = standings["position"];
-                        temp_arr.value.push({ pos: pos, team_name: team_name });
+                        let num_rec = getNumRecord(standings)
+                        let pcent_rec = getPercentRecord(standings)
+                        temp_arr.value.push({ pos: pos, team_name: team_name, num_rec: num_rec, pcent_rec: pcent_rec });
                     }
                 }
                 fetchDivStandings.current_table = temp_arr.value;
                 fetchDivStandings.table_fetched = true;
+                fetchDivStandings.loading = false;
+
             });
         }
         return {
@@ -98,10 +119,12 @@ export default {
             OPTIONS,
             NLStandings,
             fetchedStandings: fetchedLeagueStandings,
+            getNumRecord,
             getNLEastTable,
             makeRestCall,
             pingAPI,
             getNLLeagueTable,
+            getPercentRecord,
         };
     },
     async created() {
